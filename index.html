@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Superman Birthday Invitation</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&display=swap" rel="stylesheet">
@@ -97,81 +97,77 @@
         }
     </style>
 </head>
-<body class="comic-halftone min-h-screen flex items-center justify-center overflow-x-hidden p-4">
+<body class="comic-halftone min-h-[100dvh] w-screen flex items-center justify-center m-0 p-3 sm:p-4 overflow-x-hidden selection:bg-transparent select-none">
 
     <audio id="themeMusic" loop preload="auto">
         <source src="superman-theme.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="envelopeContainer" class="relative w-full max-w-sm sm:max-w-lg h-[260px] sm:h-[350px] cursor-pointer group select-none">
-        
-        <div class="absolute inset-0 bg-[#002f6c] rounded-b-xl shadow-2xl border-4 border-black flex flex-col justify-end pb-6 items-center">
-            <span class="font-comic text-yellow-400 text-lg sm:text-2xl tracking-wider animate-bounce pointer-events-none opacity-90">
+    <div id="envelopeContainer" class="relative w-full max-w-[420px] h-[260px] sm:h-[320px] cursor-pointer group">
+        <div class="absolute inset-0 bg-[#002f6c] rounded-b-xl shadow-2xl border-4 border-black flex flex-col justify-end pb-8 items-center">
+            <span class="font-comic text-yellow-400 text-xl sm:text-2xl tracking-wider animate-bounce pointer-events-none opacity-90">
                 CLICK HERE TO OPEN
             </span>
         </div>
-
         <div id="envelopeFlap" class="absolute top-0 left-0 right-0 h-1/2 bg-[#004494] border-t-4 border-x-4 border-black origin-top transition-transform duration-500 ease-in-out z-30" 
              style="clip-path: polygon(0 0, 100% 0, 50% 100%);">
         </div>
-
         <div id="waxSeal" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transition-all duration-300 group-hover:scale-110">
-            <img src="waxseal.png" alt="Superman Seal" class="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]">
+            <img src="waxseal.png" alt="Superman Seal" class="w-20 h-20 sm:w-24 sm:h-24 drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]">
         </div>
     </div>
 
-    <div id="inviteCard" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
+    <div id="inviteCard" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/75 backdrop-blur-sm overflow-y-auto w-full h-full">
         
-        <div class="relative bg-[#004494] w-full max-w-sm rounded-2xl border-4 sm:border-8 border-black p-4 sm:p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] text-center text-white my-auto animate-card-pop">
+        <div class="relative bg-[#004494] w-full max-w-[380px] rounded-2xl border-4 sm:border-6 border-black p-3 sm:p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-center text-white my-auto animate-card-pop">
             
-            <button id="muteBtn" class="absolute -top-3 right-4 z-30 bg-yellow-400 text-black font-comic text-xs border-2 border-black px-2 py-1 rounded shadow-[2px_2px_0px_#000] cursor-pointer hover:bg-yellow-300 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">
+            <button id="muteBtn" class="absolute -top-3 right-4 z-30 bg-yellow-400 text-black font-comic text-xs border-2 border-black px-2 py-1 rounded shadow-[2px_2px_0px_#000] cursor-pointer hover:bg-yellow-300 transition-all">
                 🔊 MUTE
             </button>
 
-            <div class="relative border-2 sm:border-4 border-dashed border-[#dc2626] p-4 sm:p-6 bg-cover bg-center rounded-lg overflow-hidden" 
+            <div class="relative border-2 border-dashed border-[#dc2626] p-3 sm:p-4 bg-cover bg-center rounded-lg overflow-hidden" 
                  style="background-image: url('bg.jpg');">
                 
-                <div class="absolute inset-0 bg-black/50 z-0"></div>
+                <div class="absolute inset-0 bg-black/55 z-0"></div>
                 
-                <div class="relative z-10 min-h-[400px] flex flex-col justify-between">
+                <div class="relative z-10 flex flex-col justify-between space-y-4">
                     
                     <div id="block1" class="reveal-smooth">
-                        <h1 class="font-comic text-3xl sm:text-5xl text-yellow-400 uppercase tracking-wide drop-shadow-[4px_4px_0px_#dc2626] rotate-[-2deg] mb-2">
+                        <h1 class="font-comic text-3xl sm:text-4xl text-yellow-400 uppercase tracking-wide drop-shadow-[3px_3px_0px_#dc2626] rotate-[-2deg] mb-1">
                             YOU'RE INVITEd!
                         </h1>
-                        <div class="font-comic text-xl sm:text-2xl text-white tracking-wide drop-shadow-[2px_2px_0px_#000] uppercase leading-tight mt-2">
+                        <div class="font-comic text-lg sm:text-xl text-white tracking-wide drop-shadow-[2px_2px_0px_#000] uppercase leading-tight mt-1">
                             FOR <span class="text-yellow-300">ARMAAN TAUHAA'S</span><br>FIRST BIRTHDAY
                         </div>
                     </div>
                     
-                    <hr id="divider" class="reveal-smooth border border-black my-2">
+                    <hr id="divider" class="reveal-smooth border border-black/40">
 
-                    <div class="space-y-4 font-body-comic tracking-wide">
-                        
+                    <div class="space-y-3 font-body-comic tracking-wide">
                         <div id="block2" class="reveal-smooth grid grid-cols-2 gap-2">
-                            <div class="bg-[#dc2626]/95 border-2 border-black p-2 rounded-xl rotate-[1deg] shadow-[2px_2px_0px_#000] flex flex-col items-center justify-center">
-                                <span class="text-yellow-400 font-comic text-xs sm:text-sm border-b-2 border-black/40 pb-0.5 mb-1 inline-block w-3/4 tracking-widest">DATE</span>
-                                <p id="textDate" class="text-white text-base sm:text-xl min-h-[28px] font-comic"></p>
+                            <div class="bg-[#dc2626]/95 border-2 border-black py-1.5 px-1 rounded-xl rotate-[1deg] shadow-[2px_2px_0px_#000] flex flex-col items-center justify-center">
+                                <span class="text-yellow-400 font-comic text-xs border-b-2 border-black/30 pb-0.5 mb-1 inline-block w-4/5 tracking-wider">DATE</span>
+                                <p id="textDate" class="text-white text-sm sm:text-base min-h-[24px] font-comic"></p>
                             </div>
-                            <div class="bg-[#dc2626]/95 border-2 border-black p-2 rounded-xl rotate-[-1deg] shadow-[2px_2px_0px_#000] flex flex-col items-center justify-center">
-                                <span class="text-yellow-400 font-comic text-xs sm:text-sm border-b-2 border-black/40 pb-0.5 mb-1 inline-block w-3/4 tracking-widest">TIME</span>
-                                <p id="textTime" class="text-white text-base sm:text-xl min-h-[28px] font-comic"></p>
+                            <div class="bg-[#dc2626]/95 border-2 border-black py-1.5 px-1 rounded-xl rotate-[-1deg] shadow-[2px_2px_0px_#000] flex flex-col items-center justify-center">
+                                <span class="text-yellow-400 font-comic text-xs border-b-2 border-black/30 pb-0.5 mb-1 inline-block w-4/5 tracking-wider">TIME</span>
+                                <p id="textTime" class="text-white text-sm sm:text-base min-h-[24px] font-comic"></p>
                             </div>
                         </div>
 
-                        <div id="block3" class="reveal-smooth bg-yellow-400/95 border-2 border-black p-3 rounded-xl shadow-[3px_3px_0px_#000] text-black">
-                            <span class="font-comic text-sm sm:text-base text-[#004494] border-b-2 border-black/30 pb-0.5 mb-1.5 inline-block w-1/2 tracking-widest">VENUE</span>
-                            <p id="textVenue" class="font-comic text-lg sm:text-2xl min-h-[32px] text-[#002f6c] leading-tight"></p>
+                        <div id="block3" class="reveal-smooth bg-yellow-400/95 border-2 border-black p-2.5 rounded-xl shadow-[2px_2px_0px_#000] text-black">
+                            <span class="font-comic text-xs text-[#004494] border-b-2 border-black/20 pb-0.5 mb-1 inline-block w-1/3 tracking-wider">VENUE</span>
+                            <p id="textVenue" class="font-comic text-base sm:text-xl min-h-[28px] text-[#002f6c] leading-tight"></p>
                         </div>
                     </div>
 
-                    <div id="block4" class="reveal-smooth relative mt-4 bg-[#002f6c] border-4 border-dashed border-yellow-400 p-4 sm:p-5 rounded-xl rotate-[1deg] shadow-[4px_4px_0px_rgba(0,0,0,0.5)] min-h-[90px] flex items-center justify-center overflow-hidden select-none">
+                    <div id="block4" class="reveal-smooth relative bg-[#002f6c] border-4 border-dashed border-yellow-400 p-4 rounded-xl rotate-[0.5deg] shadow-[3px_3px_0px_rgba(0,0,0,0.5)] min-h-[85px] flex items-center justify-center overflow-hidden">
                         
-                        <p class="font-comic text-base sm:text-xl text-yellow-300 tracking-wider uppercase drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] leading-snug">
+                        <p class="font-comic text-sm sm:text-base text-yellow-300 tracking-wider uppercase drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] leading-snug w-full px-1">
                             💥 ALSO CELEBRATING 80 SUPER YEARS OF MR. KHAN! 💥
                         </p>
                         
-                        <div id="scratchHint" class="absolute pointer-events-none z-20 font-comic text-sm sm:text-base text-yellow-400 bg-black/85 px-4 py-2 rounded-md border border-yellow-400 tracking-wide shadow-md animate-bounce">
+                        <div id="scratchHint" class="absolute pointer-events-none z-20 font-comic text-xs sm:text-sm text-yellow-400 bg-black/90 px-3 py-1.5 rounded-md border border-yellow-400 tracking-wide shadow-md animate-bounce">
                             👉 SCRATCH TO REVEAL 👈
                         </div>
 
@@ -180,15 +176,15 @@
                 </div>
             </div>
 
-            <div id="stickerBam" class="absolute -top-8 -left-6 sm:-top-12 sm:-left-12 w-24 h-24 sm:w-36 sm:h-36 rotate-[-15deg] opacity-0 z-20">
-                <div class="starburst-shape bg-yellow-400 border-2 sm:border-4 border-black w-full h-full flex items-center justify-center shadow-[3px_3px_0px_#000]">
-                    <span class="font-comic text-black text-base sm:text-2xl tracking-wide transform -rotate-2">BAM!</span>
+            <div id="stickerBam" class="absolute -top-6 -left-6 w-20 h-20 sm:w-24 sm:h-24 rotate-[-15deg] opacity-0 z-20 pointer-events-none">
+                <div class="starburst-shape bg-yellow-400 border-2 border-black w-full h-full flex items-center justify-center shadow-[2px_2px_0px_#000]">
+                    <span class="font-comic text-black text-sm sm:text-base tracking-wide transform -rotate-2">BAM!</span>
                 </div>
             </div>
 
-            <div id="stickerPow" class="absolute -bottom-8 -right-6 sm:-bottom-12 sm:-right-12 w-24 h-24 sm:w-36 sm:h-36 rotate-[15deg] opacity-0 z-20">
-                <div class="starburst-shape bg-[#dc2626] border-2 sm:border-4 border-black w-full h-full flex items-center justify-center shadow-[3px_3px_0px_#000]">
-                    <span class="font-comic text-yellow-300 text-base sm:text-2xl tracking-wide transform rotate-2">POW!</span>
+            <div id="stickerPow" class="absolute -bottom-6 -right-6 w-20 h-20 sm:w-24 sm:h-24 rotate-[15deg] opacity-0 z-20 pointer-events-none">
+                <div class="starburst-shape bg-[#dc2626] border-2 border-black w-full h-full flex items-center justify-center shadow-[2px_2px_0px_#000]">
+                    <span class="font-comic text-yellow-300 text-sm sm:text-base tracking-wide transform rotate-2">POW!</span>
                 </div>
             </div>
 
@@ -212,11 +208,10 @@
 
         // Envelope Open & Audio Play Trigger
         envelope.addEventListener('click', () => {
-            // Audio Initiation Trigger with specific timestamp logic
             if (music) {
-                music.volume = 0.4; // Comfort 40% volume mix
-                music.currentTime = 44; // 💥 FORWARD SEEK TO THE 44TH SECOND MARK
-                music.play().catch(err => console.log("Audio playback blocked or track asset missing:", err));
+                music.volume = 0.4;
+                music.currentTime = 44; // Forward seek to the 44th second mark
+                music.play().catch(err => console.log("Audio bypass handled safely:", err));
             }
 
             seal.style.transform = 'translate(-50%, -50%) scale(0)';
@@ -228,6 +223,8 @@
 
             setTimeout(() => {
                 inviteCard.classList.remove('hidden');
+                // Lock safe mobile viewport frame scrolling
+                document.documentElement.style.overflow = 'hidden';
                 document.body.style.overflow = 'hidden'; 
                 
                 startSequentialReveal();
@@ -249,7 +246,7 @@
             }
         });
 
-        // Typing Engine
+        // Clean Typewriter Engine
         function typeWriter(elementId, text, speed, callback) {
             let i = 0;
             const element = document.getElementById(elementId);
@@ -270,7 +267,7 @@
         }
 
         function startSequentialReveal() {
-            // Step 1: Title Component Push
+            // Step 1: Title Card Fade-In
             const b1 = document.getElementById('block1');
             b1.classList.add('show');
             
@@ -279,7 +276,7 @@
                 document.getElementById('stickerBam').classList.add('animate-sticker');
             }, 500);
 
-            // Step 3: Details Block Fade-In & Text Execution Pacing
+            // Step 3: Details Block Fade-In & Text Execution
             setTimeout(() => {
                 document.getElementById('divider').classList.add('show');
                 document.getElementById('block2').classList.add('show');
@@ -295,20 +292,22 @@
                             document.getElementById('block4').classList.add('show');
                             document.getElementById('stickerPow').classList.add('animate-sticker');
                             
-                            initScratchCard();
+                            // Delayed initializing prevents box rendering size errors on slower phones
+                            setTimeout(initScratchCard, 100);
                         });
                     });
                 });
             }, 1200);
         }
 
-        // Metallic Silver Scratch Card Engine 
+        // Robust Mobile-First Canvas Scratch Engine
         function initScratchCard() {
             const canvas = document.getElementById('scratchCanvas');
             const ctx = canvas.getContext('2d');
             const parent = canvas.parentElement;
             const hint = document.getElementById('scratchHint');
             
+            // Safe live DOM calculation
             const rect = parent.getBoundingClientRect();
             canvas.width = rect.width;
             canvas.height = rect.height;
@@ -324,7 +323,7 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Noise grain lines for metal sheen texture realism
+            // Sheen texture
             ctx.strokeStyle = 'rgba(255,255,255,0.15)';
             ctx.lineWidth = 1;
             for (let i = 0; i < canvas.height; i += 3) {
@@ -347,6 +346,9 @@
                 if (!isDrawing) return;
                 clearHint();
                 
+                // Prevent mobile drag-scrolling actions while scratching
+                if (e.cancelable) e.preventDefault();
+                
                 const currentRect = canvas.getBoundingClientRect();
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -361,21 +363,14 @@
             }
 
             canvas.addEventListener('mousedown', () => isDrawing = true);
-            canvas.addEventListener('touchstart', () => { isDrawing = true; });
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
             
             window.addEventListener('mouseup', () => isDrawing = false);
             window.addEventListener('touchend', () => isDrawing = false);
             
             canvas.addEventListener('mousemove', scratch);
-            canvas.addEventListener('touchmove', scratch);
+            canvas.addEventListener('touchmove', scratch, { passive: false });
         }
-
-        // Close/reload fallback handler (ignoring background clicks on active components)
-        inviteCard.addEventListener('click', (e) => {
-            if (e.target === inviteCard) {
-                location.reload(); 
-            }
-        });
     </script>
 </body>
 </html>
