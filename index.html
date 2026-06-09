@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superman Birthday Invitation</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Comic Halftone Background & Animations */
+        .comic-halftone {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 15%, transparent 16%),
+                              radial-gradient(#cbd5e1 15%, transparent 16%);
+            background-size: 16px 16px;
+            background-position: 0 0, 8px 8px;
+        }
+
+        .font-comic {
+            font-family: 'Luckiest Guy', cursive;
+            letter-spacing: 0.05em;
+        }
+        
+        .font-body-comic {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 0.05em;
+        }
+
+        /* Envelope Open Animation */
+        .flap-open {
+            transform: rotateX(180deg);
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+            z-index: 10;
+        }
+
+        /* Ultra Smooth Hardware-Accelerated Reveal Animation */
+        .reveal-smooth {
+            opacity: 0;
+            transform: translateY(15px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1),
+                        transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        
+        .reveal-smooth.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Slide up card animation */
+        @keyframes slideUp {
+            0% { transform: translateY(100%) scale(0.8); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .animate-card-pop {
+            animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Comic Sticker Pop Animation */
+        @keyframes stickerPop {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(15deg); opacity: 1; }
+            100% { transform: scale(1) rotate(10deg); opacity: 1; }
+        }
+        .animate-sticker {
+            animation: stickerPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Starburst Clip-Path Shape */
+        .starburst-shape {
+            clip-path: polygon(50% 0%, 64% 32%, 98% 30%, 75% 53%, 86% 87%, 50% 70%, 14% 87%, 25% 53%, 2% 30%, 36% 32%);
+        }
+
+        /* Smooth Blinking Typing Cursor Effect */
+        .typing-target::after {
+            content: '|';
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { color: transparent }
+            50% { color: #facc15; }
+        }
+
+        /* Scratch Card Overlay Layer Styling */
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            touch-action: none;
+            border-radius: 0.75rem;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="comic-halftone min-h-screen flex items-center justify-center overflow-x-hidden p-4">
+
+    <audio id="themeMusic" loop preload="auto">
+        <source src="superman-theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="envelopeContainer" class="relative w-full max-w-sm sm:max-w-lg h-[260px] sm:h-[350px] cursor-pointer group select-none">
+        
+        <div class="absolute inset-0 bg-[#002f6c] rounded-b-xl shadow-2xl border-4 border-black flex flex-col justify-end pb-6 items-center">
+            <span class="font-comic text-yellow-400 text-lg sm:text-2xl tracking-wider animate-bounce pointer-events-none opacity-90">
+                CLICK HERE TO OPEN
+            </span>
+        </div>
+
+        <div id="envelopeFlap" class="absolute top-0 left-0 right-0 h-1/2 bg-[#004494] border-t-4 border-x-4 border-black origin-top transition-transform duration-500 ease-in-out z-30" 
+             style="clip-path: polygon(0 0, 100% 0, 50% 100%);">
+        </div>
+
+        <div id="waxSeal" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transition-all duration-300 group-hover:scale-110">
+            <img src="waxseal.png" alt="Superman Seal" class="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]">
+        </div>
+    </div>
+
+    <div id="inviteCard" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
+        
+        <div class="relative bg-[#004494] w-full max-w-sm rounded-2xl border-4 sm:border-8 border-black p-4 sm:p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] text-center text-white my-auto animate-card-pop">
+            
+            <button id="muteBtn" class="absolute -top-3 right-4 z-30 bg-yellow-400 text-black font-comic text-xs border-2 border-black px-2 py-1 rounded shadow-[2px_2px_0px_#000] cursor-pointer hover:bg-yellow-300 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">
+                🔊 MUTE
+            </button>
+
+            <div class="relative border-2 sm:border-4 border-dashed border-[#dc2626] p-4 sm:p-6 bg-cover bg-center rounded-lg overflow-hidden" 
+                 style="background-image: url('bg.jpg');">
+                
+                <div class="absolute inset-0 bg-black/50 z-0"></div>
+                
+                <div class="relative z-10 min-h-[400px] flex flex-col justify-between">
+                    
+                    <div id="block1" class="reveal-smooth">
+                        <h1 class="font-comic text-3xl sm:text-5xl text-yellow-400 uppercase tracking-wide drop-shadow-[4px_4px_0px_#dc2626] rotate-[-2deg] mb-2">
+                            YOU'RE INVITEd!
+                        </h1>
+                        <div class="font-comic text-xl sm:text-2xl text-white tracking-wide drop-shadow-[2px_2px_0px_#000] uppercase leading-tight mt-2">
+                            FOR <span class="text-yellow-300">ARMAAN TAUHAA'S</span><br>FIRST BIRTHDAY
+                        </div>
+                    </div>
+                    
+                    <hr id="divider" class="reveal-smooth border border-black my-2">
+
+                    <div class="space-y-4 font-body-comic tracking-wide">
+                        
+                        <div id="block2" class="reveal-smooth grid grid-cols-2 gap-2">
+                            <div class="bg-[#dc2626]/95 border-2 border-black p-2 rounded-xl rotate-[1deg] shadow-[2px_2px_0px_#000] flex flex-col items-center justify-center">
+                                <span class="text-yellow-400 font-comic text-xs sm:text-sm border-b-2 border-black/40 pb-0.5 mb-1 inline-block w-3/4 tracking-widest">DATE</span>
+                                <p id="textDate" class="text-white text-base sm:text-xl min-h-[28px] font-comic"></p>
+                            </div>
+                            <div class="bg-[#dc2626]/95 border-2 border-black p-2 rounded-xl rotate-[-1deg] shadow-[2px_2px_0px_#000] flex flex-col items-center justify-center">
+                                <span class="text-yellow-400 font-comic text-xs sm:text-sm border-b-2 border-black/40 pb-0.5 mb-1 inline-block w-3/4 tracking-widest">TIME</span>
+                                <p id="textTime" class="text-white text-base sm:text-xl min-h-[28px] font-comic"></p>
+                            </div>
+                        </div>
+
+                        <div id="block3" class="reveal-smooth bg-yellow-400/95 border-2 border-black p-3 rounded-xl shadow-[3px_3px_0px_#000] text-black">
+                            <span class="font-comic text-sm sm:text-base text-[#004494] border-b-2 border-black/30 pb-0.5 mb-1.5 inline-block w-1/2 tracking-widest">VENUE</span>
+                            <p id="textVenue" class="font-comic text-lg sm:text-2xl min-h-[32px] text-[#002f6c] leading-tight"></p>
+                        </div>
+                    </div>
+
+                    <div id="block4" class="reveal-smooth relative mt-4 bg-[#002f6c] border-4 border-dashed border-yellow-400 p-4 sm:p-5 rounded-xl rotate-[1deg] shadow-[4px_4px_0px_rgba(0,0,0,0.5)] min-h-[90px] flex items-center justify-center overflow-hidden select-none">
+                        
+                        <p class="font-comic text-base sm:text-xl text-yellow-300 tracking-wider uppercase drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] leading-snug">
+                            💥 ALSO CELEBRATING 80 SUPER YEARS OF MR. KHAN! 💥
+                        </p>
+                        
+                        <div id="scratchHint" class="absolute pointer-events-none z-20 font-comic text-sm sm:text-base text-yellow-400 bg-black/85 px-4 py-2 rounded-md border border-yellow-400 tracking-wide shadow-md animate-bounce">
+                            👉 SCRATCH TO REVEAL 👈
+                        </div>
+
+                        <canvas id="scratchCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="stickerBam" class="absolute -top-8 -left-6 sm:-top-12 sm:-left-12 w-24 h-24 sm:w-36 sm:h-36 rotate-[-15deg] opacity-0 z-20">
+                <div class="starburst-shape bg-yellow-400 border-2 sm:border-4 border-black w-full h-full flex items-center justify-center shadow-[3px_3px_0px_#000]">
+                    <span class="font-comic text-black text-base sm:text-2xl tracking-wide transform -rotate-2">BAM!</span>
+                </div>
+            </div>
+
+            <div id="stickerPow" class="absolute -bottom-8 -right-6 sm:-bottom-12 sm:-right-12 w-24 h-24 sm:w-36 sm:h-36 rotate-[15deg] opacity-0 z-20">
+                <div class="starburst-shape bg-[#dc2626] border-2 sm:border-4 border-black w-full h-full flex items-center justify-center shadow-[3px_3px_0px_#000]">
+                    <span class="font-comic text-yellow-300 text-base sm:text-2xl tracking-wide transform rotate-2">POW!</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelopeContainer');
+        const flap = document.getElementById('envelopeFlap');
+        const seal = document.getElementById('waxSeal');
+        const inviteCard = document.getElementById('inviteCard');
+        const music = document.getElementById('themeMusic');
+        const muteBtn = document.getElementById('muteBtn');
+
+        // Target Strings Data
+        const dataStrings = {
+            date: "13 JUNE 2026",
+            time: "14:30",
+            venue: "BEMATHS CATERERS"
+        };
+
+        // Envelope Open & Audio Play Trigger
+        envelope.addEventListener('click', () => {
+            // Audio Initiation Trigger with specific timestamp logic
+            if (music) {
+                music.volume = 0.4; // Comfort 40% volume mix
+                music.currentTime = 44; // 💥 FORWARD SEEK TO THE 44TH SECOND MARK
+                music.play().catch(err => console.log("Audio playback blocked or track asset missing:", err));
+            }
+
+            seal.style.transform = 'translate(-50%, -50%) scale(0)';
+            seal.style.opacity = '0';
+            
+            setTimeout(() => {
+                flap.classList.add('flap-open');
+            }, 200);
+
+            setTimeout(() => {
+                inviteCard.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; 
+                
+                startSequentialReveal();
+            }, 800);
+        });
+
+        // Interactive Audio Mute/Unmute Handler
+        muteBtn.addEventListener('click', () => {
+            if (music.muted) {
+                music.muted = false;
+                muteBtn.textContent = "🔊 MUTE";
+                muteBtn.classList.remove('bg-gray-500');
+                muteBtn.classList.add('bg-yellow-400');
+            } else {
+                music.muted = true;
+                muteBtn.textContent = "🔇 UNMUTE";
+                muteBtn.classList.remove('bg-yellow-400');
+                muteBtn.classList.add('bg-gray-500');
+            }
+        });
+
+        // Typing Engine
+        function typeWriter(elementId, text, speed, callback) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.classList.add('typing-target');
+            element.textContent = "";
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.remove('typing-target');
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
+        function startSequentialReveal() {
+            // Step 1: Title Component Push
+            const b1 = document.getElementById('block1');
+            b1.classList.add('show');
+            
+            // Step 2: BAM Burst sticker appearance
+            setTimeout(() => {
+                document.getElementById('stickerBam').classList.add('animate-sticker');
+            }, 500);
+
+            // Step 3: Details Block Fade-In & Text Execution Pacing
+            setTimeout(() => {
+                document.getElementById('divider').classList.add('show');
+                document.getElementById('block2').classList.add('show');
+                
+                typeWriter('textDate', dataStrings.date, 100, () => {
+                    typeWriter('textTime', dataStrings.time, 100, () => {
+                        
+                        // Step 4: Show Venue Block
+                        document.getElementById('block3').classList.add('show');
+                        typeWriter('textVenue', dataStrings.venue, 80, () => {
+                            
+                            // Step 5: Deliver Scratchcard and POW Sticker
+                            document.getElementById('block4').classList.add('show');
+                            document.getElementById('stickerPow').classList.add('animate-sticker');
+                            
+                            initScratchCard();
+                        });
+                    });
+                });
+            }, 1200);
+        }
+
+        // Metallic Silver Scratch Card Engine 
+        function initScratchCard() {
+            const canvas = document.getElementById('scratchCanvas');
+            const ctx = canvas.getContext('2d');
+            const parent = canvas.parentElement;
+            const hint = document.getElementById('scratchHint');
+            
+            const rect = parent.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            
+            // Silver brushed metallic gradient design
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#cbd5e1'); 
+            gradient.addColorStop(0.3, '#94a3b8'); 
+            gradient.addColorStop(0.5, '#e2e8f0'); 
+            gradient.addColorStop(0.7, '#64748b'); 
+            gradient.addColorStop(1, '#94a3b8');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Noise grain lines for metal sheen texture realism
+            ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.height; i += 3) {
+                ctx.beginPath();
+                ctx.moveTo(0, i + (Math.random() * 4));
+                ctx.lineTo(canvas.width, i + (Math.random() * 4));
+                ctx.stroke();
+            }
+
+            let isDrawing = false;
+            
+            function clearHint() {
+                if(hint) {
+                    hint.style.opacity = '0';
+                    setTimeout(() => hint.remove(), 300);
+                }
+            }
+
+            function scratch(e) {
+                if (!isDrawing) return;
+                clearHint();
+                
+                const currentRect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                const x = clientX - currentRect.left;
+                const y = clientY - currentRect.top;
+                
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 35, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            canvas.addEventListener('mousedown', () => isDrawing = true);
+            canvas.addEventListener('touchstart', () => { isDrawing = true; });
+            
+            window.addEventListener('mouseup', () => isDrawing = false);
+            window.addEventListener('touchend', () => isDrawing = false);
+            
+            canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('touchmove', scratch);
+        }
+
+        // Close/reload fallback handler (ignoring background clicks on active components)
+        inviteCard.addEventListener('click', (e) => {
+            if (e.target === inviteCard) {
+                location.reload(); 
+            }
+        });
+    </script>
+</body>
+</html>
